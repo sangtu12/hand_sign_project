@@ -122,6 +122,103 @@ pip install pandas scikit-learn matplotlib
 
 ## 🎥 Langkah Penggunaan
 
+Project ini dikembangkan melalui **dua pendekatan utama**, yaitu **YOLO (image-based)** dan **MediaPipe Landmark (final)**. Berikut penjelasan lengkap penggunaan dataset dan kode pada masing-masing pendekatan.
+
+---
+
+## 🔶 Pendekatan 1: Image-Based (YOLO & CNN)
+
+Pendekatan ini merupakan **tahap awal eksplorasi**, menggunakan dataset gambar tangan dan YOLO untuk deteksi objek.
+
+### 📁 Dataset YOLO
+
+Struktur dataset YOLO:
+
+```
+dataset/images/
+├── train/
+├── val/
+└── test/
+
+dataset/labels/
+├── train/
+├── val/
+└── test/
+```
+
+Setiap gambar memiliki file label `.txt` berformat YOLO:
+
+```
+<class_id> <x_center> <y_center> <width> <height>
+```
+
+### 📜 Kode Terkait YOLO
+
+- `collect_data.py`
+
+  - Mengambil gambar tangan dari webcam
+  - Menyimpan ke folder dataset image
+
+- `auto_label_yolo.py`
+
+  - Membuat bounding box otomatis
+  - Menghasilkan file label YOLO
+
+- `data.yaml`
+
+  - Konfigurasi dataset YOLO
+  - Digunakan saat training YOLO
+
+### 🧪 Tujuan Penggunaan YOLO
+
+- Eksperimen object detection tangan
+- Auto-label dataset
+- Memahami pipeline deteksi berbasis gambar
+
+⚠️ **Catatan**: Pendekatan ini menghasilkan deteksi tangan, namun **kurang stabil untuk klasifikasi huruf realtime**, sehingga tidak dipakai sebagai solusi akhir.
+
+---
+
+## 🔷 Pendekatan 2: Landmark-Based (MediaPipe + CNN)
+
+Pendekatan ini merupakan **solusi final** karena lebih stabil dan ringan.
+
+### 📁 Dataset Landmark
+
+```
+dataset/landmarks/
+├── A.csv
+├── B.csv
+├── C.csv
+└── D.csv
+```
+
+Setiap file CSV berisi:
+
+- 21 titik landmark tangan
+- Koordinat (x, y)
+- Label huruf
+
+### 📜 Kode Terkait Landmark
+
+- `collect_landmark.py`
+
+  - Merekam landmark tangan menggunakan MediaPipe
+  - Menyimpan data ke CSV sesuai label
+
+- `train_landmark_model.py`
+
+  - Melatih CNN berbasis landmark
+  - Output: `hand_landmark_model.h5`
+
+- `realtime_landmark.py`
+
+  - Deteksi tangan realtime
+  - Ekstraksi landmark
+  - Prediksi huruf
+
+---
+
 ### 🔹 1. Rekam Data Landmark
 
 Rekam landmark tangan untuk setiap huruf.
@@ -231,5 +328,3 @@ Jika ingin dikembangkan lebih lanjut:
 - Tambah smoothing prediksi
 - Tambah kalimat (sequence model)
 - Tambah huruf J & Z (gesture dinamis)
-
----
