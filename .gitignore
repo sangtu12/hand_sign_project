@@ -1,6 +1,11 @@
 .venv/
+venv/
 __pycache__/
 *.pyc
 *.pyo
 *.pt
+*.pth
+*.onnx
 *.log
+*.egg-info/
+.DS_Store
