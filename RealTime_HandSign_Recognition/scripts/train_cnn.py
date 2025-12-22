@@ -2,18 +2,19 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import os
 
 # ===============================
-# PATH DATASET (WAJIB ADA)
+# PATH DATASET
 # ===============================
 train_dir = "dataset/images/train"
+os.makedirs("model", exist_ok=True)
 
 # ===============================
 # PARAMETER
 # ===============================
 IMG_SIZE = (64, 64)
 BATCH_SIZE = 16
-NUM_CLASSES = 24
 EPOCHS = 10
 
 # ===============================
@@ -40,9 +41,11 @@ val_gen = datagen.flow_from_directory(
     subset="validation"
 )
 
+NUM_CLASSES = train_gen.num_classes
+
 print("Train samples:", train_gen.samples)
-print("Val samples:", val_gen.samples)
-print("Classes:", train_gen.class_indices)
+print("Val samples  :", val_gen.samples)
+print("Classes      :", train_gen.class_indices)
 
 # ===============================
 # MODEL CNN
@@ -79,4 +82,4 @@ model.fit(
 # SAVE MODEL
 # ===============================
 model.save("model/sign_language_cnn.h5")
-print("✅ Model berhasil disimpan")
+print("✅ Model CNN berhasil disimpan")
