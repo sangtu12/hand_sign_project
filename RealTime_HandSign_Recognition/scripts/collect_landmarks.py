@@ -3,11 +3,12 @@ import mediapipe as mp
 import csv
 import os
 
-LABEL = "G"  # GANTI SETIAP HURUF
+LABEL = "A"  # GANTI SETIAP HURUF
 SAVE_PATH = f"dataset/landmarks/{LABEL}.csv"
 
 os.makedirs("dataset/landmarks", exist_ok=True)
 
+# mediaPipe setup
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(
     max_num_hands=1,

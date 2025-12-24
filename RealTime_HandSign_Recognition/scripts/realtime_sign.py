@@ -10,7 +10,7 @@ from collections import deque
 MODEL_PATH = "model/sign_language_cnn.h5"
 model = tf.keras.models.load_model(MODEL_PATH)
 
-# LABELS (24 huruf, tanpa J & Z)
+# LABELS 
 LABELS = list("ABCDEFGHIKLMNOPQRSTUVWXY")
 
 # ========================
